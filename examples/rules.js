@@ -1,37 +1,69 @@
-export default {
-  "data<optinal|len>": [{
+const rules = {
+  "data<optional|len>": [{
     "number": {
-      "shortInt": "#shortInt(min,max)",
-      "Int": "#Int(min,max)",
-      "longInt": "#longInt(min,max)",
-      "float": "#float(min,max,precision)"
+      "shortInt": "#shortInt",
+      "Int": "#Int()",
+      "longInt": "#longInt(0,10)",
+      "float": "#float(20,100,4)"
     },
     "string": {
-      "shortText": "#cword(content,min,max)",
-      "Text": "#ctitle(content,min,max)",
-      "longText": "#csentence(content,min,max)",
-      "longlongText": "#cparagraph(content,min,max)",
-      "timestamp": "#date(min,max)",
+      "shortText": "#cword",
+      "Text": "#ctitle('我是title',)",
+      "longText": "#csentence()",
+      "longlongText": "#cparagraph('',1,3)",
+      "timestamp": "#date",
       "userChineseName": "#ChineseName",
       "userEnglishName": "#EnglishName",
       "phoneNum": "#phone",
       "url": "#url",
       "email": "#email",
-      "image": "#image(size, background, foreground, format, text)",
+      "image": "#image",
       "region": "#region",
       "province": "#province",
-      "city": "#city(prefix)",
-      "county": "#county(prefix)"
+      "city": "#city(true)",
+      "county": "#county"
     },
-    "boolean": "#bool(rate)", //rate:返回true的概率
+    "boolean": "#bool(80)", //rate:返回true的概率
     "regexp": /\d{5,10}/,
-    "data": function () {
+    "func": function () {
       var a = 1;
       return a + 3;
     },
-    "increment": "#increment(startNum)", // 自加1返回
-    "decrease": "#decrease(startNum)", // 自减1返回
+    "increment": "#increment(10)", // 自加1返回
+    "decrease": "#decrease()", // 自减1返回
     // arrayData：随机选择一个元素的数组，数组元素可以是#开头定义的规则关键字，这时会随机返回对应结果
-    "randomSelectOne": "#randomSelect(arrayData)",
+    "randomSelectOne": "#randomSelect(['post','get'])",
   }],
+};
+const simpleRules = {
+  "number": {
+    "shortInt": "#shortInt",
+    "Int": "#Int()",
+    "longInt": "#longInt(0,10)",
+    "float": "#float(20,100,4)"
+  },
+  "increment": "#increment(10)", // 自加1返回
+  "decrease": "#decrease()", // 自减1返回
+  // arrayData：随机选择一个元素的数组，数组元素可以是#开头定义的规则关键字，这时会随机返回对应结果
+  "randomSelectOne": "#randomSelect(['post','get'])",
+  "arr<5>": [{
+    "province": "#province",
+    "city": "#city(true)",
+    "county": "#county",
+  }],
+  "optional<optional>": /\d{5,10}/,
+  "func": function () {
+    var a = 1;
+    return a + 3;
+  },
+}
+const arrRules = [{
+  "province": "#province",
+  "city": "#city(true)",
+  "county": "#county",
+}];
+export default {
+  rules,
+  simpleRules,
+  arrRules,
 };

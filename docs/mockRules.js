@@ -35,8 +35,8 @@ const meRules = {
       var a = 1;
       return a + 3;
     },
-    "increment": "#increment(startNum)", // 自加1返回
-    "decrease": "#decrease(startNum)", // 自减1返回
+    "increment": "#increment(step)", // 自增步数，默认1
+    "decrease": "#decrease(step)", // 自减步数，默认1
     // arrayData：随机选择一个元素的数组，数组元素可以是#开头定义的规则关键字，这时会随机返回对应结果；
     "randomSelectOne": "#randomSelect(arrayData)",
   }],

@@ -1,5 +1,8 @@
 import Mock from '../src/mock';
 import regMatchStr from '../src/regexp';
+import RULE from './rules';
+import parse from '../index';
+import rules from './rules';
 console.log('短整型', Mock.shortInt(0, 10));
 console.log('整型', Mock.Int(1000, 2000));
 console.log('长整型', Mock.longInt(3000, 4000));
@@ -33,4 +36,5 @@ console.log('区县', Mock.county());
 const reg1 = /\w\W\s\S\d\D/
 console.log('根据正则表达式解析文件生成匹配的字符串1', regMatchStr(reg1));
 const reg2 = new RegExp('\\d{5,10}');
-console.log('根据正则表达式解析文件生成匹配的字符串1', regMatchStr(reg2));
+console.log('根据正则表达式解析文件生成匹配的字符串2', regMatchStr(reg2));
+console.log('根据自定义mock规则，生成mock数据', parse(RULE.simpleRules));

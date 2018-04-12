@@ -3,14 +3,22 @@
  */
 import Mock from './mock';
 import regMatchStr from './regexp';
+// 属性名定义中，获取属性名和规则
+const REG_KEY = /(\w+)(?:<(\d+|\w+)?\|?(\d+|\w+)?>)?/;
+// 属性值定义的mock规则中，获取函数名称和传参
+const REG_FUNC = /^#(\w+)(?:\((.*?)\))?/
+// optional字段返回null的概率
+const RATE_NULL = 0.35;
+
 export default {
-  mock(rules, name = '') {
+  mock(rules, name = '', context = {}) {
     const type = this.type(rules);
     const nameInfo = this.parseName(name);
     if (this[type]) {
       let data = this[type]({
         rule: rules,
         ...nameInfo,
+        context,
       });
       return data;
     }
@@ -24,7 +32,6 @@ export default {
   // 解析属性名的规则
   parseName(propName) {
     if (propName) {
-      const REG_KEY = /(\w+)(?:<(\d+|\w+)?\|?(\d+|\w+)?>)?/;
       const keys = propName.match(REG_KEY);
       const name = keys[1];
       const optional = !!(keys[2] && keys[2].indexOf('optional') > -1 || keys[3] && keys[3].indexOf('optional') > -1);
@@ -43,12 +50,18 @@ export default {
       rule,
       optional,
     } = options;
-    if (optional && Math.random() <= 0.25) return null;
     for (let prop in rule) {
       const value = rule[prop];
-      const REG_KEY = /(\w+)(?:<(\d+|\w+)?\|?(\d+|\w+)?>)?/;
-      const key = prop.match(REG_KEY)[1];
-      result[key] = this.mock(value, prop);
+      const nameInfo = this.parseName(prop);
+      const key = nameInfo.name;
+      // 字段为optional时，返回为null或者不返回该字段
+      if (nameInfo.optional && Math.random() <= RATE_NULL) {
+        if (Mock.bool()) {
+          result[key] = null;
+        }
+      } else {
+        result[key] = this.mock(value, prop, result);
+      }
     }
     return result;
   },
@@ -59,7 +72,7 @@ export default {
       optional,
       len = 15, // 数组默认长度15
     } = options;
-    if (optional && Math.random() <= 0.25) return result;
+    if (optional && Math.random() <= RATE_NULL) return result;
     for (let i = 0; i < len; i++) {
       result.push(this.mock(rule[0]));
     }
@@ -72,23 +85,31 @@ export default {
   function (options) {
     const {
       rule: funcName,
-      ctx,
+      optional,
+      context,
     } = options;
-    return funcName.apply(ctx);
+    return funcName.apply(context);
   },
   string(options) {
-    const rule = options.rule;
+    const {
+      rule,
+      optional,
+    } = options;
     if (rule.startsWith('#')) {
-      const REG_FUNC = /^#(\w+)(?:\((.*?)\))?/
       const funcInfo = rule.match(REG_FUNC);
       const funcName = funcInfo[1];
       const funcParam = funcInfo[2];
-      const params = funcParam ? funcParam.split(',') : undefined;
       // 判断方法是否存在，如果存在执行函数返回结果；如果不存在直接返回该规则作为结果
       if (funcName in Mock) {
-        let result = Mock[funcName].apply(Mock, params);
-        if (result === undefined) result = '';
-        return result;
+        if (funcName === 'randomSelect') {
+          const params = funcParam ? eval(funcParam) : [];
+          return Mock[funcName].call(Mock, params);
+        } else {
+          const params = funcParam ? funcParam.split(',') : undefined;
+          let result = Mock[funcName].apply(Mock, params);
+          if (result === undefined) result = '';
+          return result;
+        }
       }
       return rule;
     }

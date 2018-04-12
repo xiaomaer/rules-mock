@@ -54,7 +54,7 @@ const simpleRules = {
   "optional<optional>": /\d{5,10}/,
   "func": function () {
     var a = 1;
-    return a + 3;
+    return a + this.number.Int;
   },
 }
 const arrRules = [{

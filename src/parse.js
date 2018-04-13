@@ -54,11 +54,9 @@ export default {
       const value = rule[prop];
       const nameInfo = this.parseName(prop);
       const key = nameInfo.name;
-      // 字段为optional时，返回为null或者不返回该字段
+      // 字段为optional时，返回为null
       if (nameInfo.optional && Math.random() <= RATE_NULL) {
-        if (Mock.bool()) {
-          result[key] = null;
-        }
+        result[key] = null;
       } else {
         result[key] = this.mock(value, prop, result);
       }

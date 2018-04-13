@@ -3,6 +3,8 @@ import regMatchStr from '../src/regexp';
 import RULE from './rules';
 import parse from '../index';
 import rules from './rules';
+import ParseToRules from '../src/parseToRules';
+import ast from './idl';
 console.log('短整型', Mock.shortInt(0, 10));
 console.log('整型', Mock.Int(1000, 2000));
 console.log('长整型', Mock.longInt(3000, 4000));
@@ -38,3 +40,6 @@ console.log('根据正则表达式解析文件生成匹配的字符串1', regMat
 const reg2 = new RegExp('\\d{5,10}');
 console.log('根据正则表达式解析文件生成匹配的字符串2', regMatchStr(reg2));
 console.log('根据自定义mock规则，生成mock数据', parse(RULE.simpleRules));
+const getRules = ParseToRules("SgSupportTicketReadModel.SgGetSupportTicketDetailResp", ast);
+console.log('从解析后的IDL文件中，获取指定接口的mock的规则', getRules);
+console.log('rules mock', parse(getRules));

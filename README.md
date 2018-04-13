@@ -3,7 +3,7 @@
 ### mock规则编写规范
 ```
 {
-  "data<optinal|len>": [{
+  "data<optional|len>": [{
     "number": {
       "shortInt": "#shortInt(min,max)",
       "Int": "#Int(min,max)",

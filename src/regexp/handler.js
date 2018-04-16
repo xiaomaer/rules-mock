@@ -253,7 +253,7 @@ export default {
     quantifier(node, result, cache) {
         const min = Math.max(node.min, 0)
         const max = isFinite(node.max) ? node.max : min + Mock.randomSelect(3, 7)
-        return Mock.Int(min, max)
+        return Mock.int32(min, max)
     },
     /*
         
@@ -270,7 +270,7 @@ export default {
         const min = this.gen(node.start, result, cache).charCodeAt()
         const max = this.gen(node.end, result, cache).charCodeAt()
         return String.fromCharCode(
-            Mock.Int(min, max)
+            Mock.int32(min, max)
         )
     },
     literal(node, result, cache) {

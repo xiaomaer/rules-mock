@@ -5,9 +5,9 @@
 {
   "data<optional|len>": [{
     "number": {
-      "shortInt": "#shortInt(min,max)",
-      "Int": "#Int(min,max)",
-      "longInt": "#longInt(min,max)",
+      "shortInt": "#int16(min,max)",
+      "Int": "#int32(min,max)",
+      "longInt": "#int64(min,max)",
       "float": "#float(min,max,precision)"
     },
     "string": {
@@ -49,9 +49,9 @@
         "msg": "#ctitle"
     },
     "pageTO": {
-        "currentPage": "#shortInt(1,100)",
+        "currentPage": "#int16(1,100)",
         "perPage": "30",
-        "total": "#longInt"
+        "total": "#int64"
     },
     "breifDistributorTOs<optional|10>": [
         {

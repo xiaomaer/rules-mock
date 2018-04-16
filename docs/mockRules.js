@@ -7,9 +7,9 @@
 const meRules = {
   "data<optinal|len>": [{
     "number": {
-      "shortInt": "#shortInt(min,max)",
-      "Int": "#Int(min,max)",
-      "longInt": "#longInt(min,max)",
+      "shortInt": "#int16(min,max)",
+      "Int": "#int32(min,max)",
+      "longInt": "#int64(min,max)",
       "float": "#float(min,max,precision)"
     },
     "string": {

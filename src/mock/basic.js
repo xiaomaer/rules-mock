@@ -10,17 +10,17 @@ export default {
   Int32, 等于int, 占4个字节. -2147483648 2147483647(2^31)
   Int64, 等于long, 占8个字节. -9223372036854775808 9223372036854775807(2^63) */
   // 短整型
-  shortInt(min = 0, max = 32767) {
+  int16(min = 0, max = 32767) {
     return randomRange(min, max);
   },
 
   // 整型(Int32)
-  Int(min = 0, max = 2147483647) {
+  int32(min = 0, max = 2147483647) {
     return randomRange(min, max);
   },
 
   // 长整型(Int64)
-  longInt(min = 0, max = 9223372036854775807) {
+  int64(min = 0, max = 9223372036854775807) {
     return randomRange(min, max);
   },
 
@@ -31,7 +31,7 @@ export default {
    * @param {number} dot ：小数点后的位数，默认为两位
    */
   float(min, max, dot = 2) {
-    let result = this.Int(min, max) + '.';
+    let result = this.int32(min, max) + '.';
     for (let i = 0; i < dot; i++) {
       result += this.charactor('123456789');
     }

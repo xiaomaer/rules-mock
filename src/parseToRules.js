@@ -29,20 +29,20 @@ export default function generate(type, ast) {
 function getRule(name, type) {
   switch (type) {
     case "i16":
-      return '#shortInt';
+      return '#int16';
     case "i32":
       if (/code/i.test(name)) {
-        return '#Int(0, 600)';
+        return '#int32(0, 600)';
       }
-      return '#Int';
+      return '#int32';
     case "i64":
       if (/date/i.test(name) || /time/i.test(name) || /period/i.test(name)) {
         return '#date';
       }
       if (/total/i.test(name)) {
-        return '#shortInt';
+        return '#int16';
       }
-      return '#longInt';
+      return '#int64';
     case "string":
       if (/contact/i.test(name) || /^(\w+)tor(\w*)$/i.test(name)) {
         return '#ChineseName';

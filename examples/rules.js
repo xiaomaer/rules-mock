@@ -1,9 +1,9 @@
 const rules = {
   "data<optional|len>": [{
     "number": {
-      "shortInt": "#shortInt",
-      "Int": "#Int()",
-      "longInt": "#longInt(0,10)",
+      "shortInt": "#int16",
+      "Int": "#int32()",
+      "longInt": "#int64(0,10)",
       "float": "#float(20,100,4)"
     },
     "string": {
@@ -33,15 +33,13 @@ const rules = {
     "decrease": "#decrease()", // 自减1返回
     // arrayData：随机选择一个元素的数组，数组元素可以是#开头定义的规则关键字，这时会随机返回对应结果
     "randomSelectOne": "#randomSelect(['post','get'])",
-    // 返回值仍是一个自定义mock规则
-    "randomSelectRuleOne": "#randomSelect(['#ChineseName','#EnglishName'])",
   }],
 };
 const simpleRules = {
   "number": {
-    "shortInt": "#shortInt",
-    "Int": "#Int()",
-    "longInt": "#longInt(0,10)",
+    "shortInt": "#int16",
+    "Int": "#int32()",
+    "longInt": "#int64(0,10)",
     "float": "#float(20,100,4)"
   },
   "increment": "#increment(10)", // 自加1返回
@@ -52,7 +50,7 @@ const simpleRules = {
   "randomSelectRuleOne": "#randomSelect(['#ChineseName','#EnglishName'])",
   "arr<5>": [{
     "province": "#province",
-    "city": "#city(true)",
+    "city": "#city()",
     "county": "#county",
   }],
   "optional<optional>": /\d{5,10}/,

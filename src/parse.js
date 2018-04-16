@@ -102,7 +102,7 @@ export default {
         if (funcName === 'randomSelect') {
           const params = funcParam ? eval(funcParam) : [];
           const result = Mock[funcName].call(Mock, params);
-          // 结果可能是个规则
+          // 返回结果可能仍是一个mock规则，执行后才可以得到结果
           return this.mock(result);
         } else {
           const params = funcParam ? funcParam.split(',') : undefined;
